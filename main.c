@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 17:47:39 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/03/11 21:33:40 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/03/11 22:44:04 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #define MAX_ITERATIONS 500
 
 static mlx_image_t* image;
+static double zoom;
 
 typedef struct s_complex {
 	double	real;
@@ -79,6 +80,18 @@ void	ft_hook(void *param)
 		image->instances[0].x -= 100;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 		image->instances[0].x += 100;
+	if (mlx_is_key_down(mlx, MLX_KEY_EQUAL))
+	{
+		zoom += 0.2;
+		image = mlx_new_image(mlx, (800 * zoom) , (600 * zoom));
+		mlx_image_to_window(mlx, image, 0, 0);
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_MINUS))
+	{
+		zoom -= 0.2;
+		image = mlx_new_image(mlx, (800 * zoom) , (600 * zoom));
+		mlx_image_to_window(mlx, image, 0, 0);
+	}
 }
 
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -134,13 +147,13 @@ void	ft_mandel(void *param)
 int	main(void)
 {
 	mlx_t* mlx;
-
+	zoom = 1;
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "Fract-ol", true)))
 	{
 		printf("%s", mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	if (!(image = mlx_new_image(mlx, 800, 600)))
+	if (!(image = mlx_new_image(mlx, (800 * 2), (600 * 2))))
 	{
 		mlx_close_window(mlx);
 		printf("%s", mlx_strerror(mlx_errno));
@@ -154,7 +167,7 @@ int	main(void)
 	}
 	mlx_loop_hook(mlx, ft_mandel, mlx);
 	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_put_string(mlx, "MANDELBROT", WIDTH / 2, HEIGHT / 2);
+	mlx_put_string(mlx, "MANDELBROT bitch", WIDTH / 2, HEIGHT / 2);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
