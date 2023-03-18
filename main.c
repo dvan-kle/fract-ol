@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 17:47:39 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/03/11 22:44:04 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/03/18 20:12:27 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #define MAX_ITERATIONS 500
 
 static mlx_image_t* image;
-static double zoom;
+static float zoom;
 
 typedef struct s_complex {
 	double	real;
@@ -58,8 +58,8 @@ int	mandel_iter(int x, int y, t_complex c)
 	x_min = -2.0;
 	xy_max = 1.0;
 	y_min = -1.0;
-	x_step = (xy_max - x_min) / WIDTH;
-	y_step = (xy_max - y_min) / HEIGHT;
+	x_step = (xy_max - x_min) / (WIDTH * zoom);
+	y_step = (xy_max - y_min) / (HEIGHT * zoom);
 	c.real = x_min + x * x_step;
 	c.imag = xy_max - y * y_step;
 	return (mandelbrot(c));
@@ -73,25 +73,13 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y -= 100;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
 		image->instances[0].y += 100;
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+		image->instances[0].y -= 100;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x -= 100;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 		image->instances[0].x += 100;
-	if (mlx_is_key_down(mlx, MLX_KEY_EQUAL))
-	{
-		zoom += 0.2;
-		image = mlx_new_image(mlx, (800 * zoom) , (600 * zoom));
-		mlx_image_to_window(mlx, image, 0, 0);
-	}
-	if (mlx_is_key_down(mlx, MLX_KEY_MINUS))
-	{
-		zoom -= 0.2;
-		image = mlx_new_image(mlx, (800 * zoom) , (600 * zoom));
-		mlx_image_to_window(mlx, image, 0, 0);
-	}
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+		image->instances[0].x -= 100;
 }
 
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -124,10 +112,12 @@ void	ft_mandel(void *param)
 	int			y;
 	int			x;
 	int			color;
+	mlx_t		*mlx;
 
 	y = 0;
 	c.real = 0;
 	c.imag = 0;
+	mlx = param;
 	while (y < HEIGHT)
 	{
 		x = 0;
@@ -142,6 +132,14 @@ void	ft_mandel(void *param)
 		}
 		y++;
 	}
+	if (mlx_is_key_down(mlx, MLX_KEY_EQUAL))
+	{
+		zoom *= 2;
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_MINUS))
+	{
+		zoom *= 0.5;
+	}
 }
 
 int	main(void)
@@ -153,7 +151,7 @@ int	main(void)
 		printf("%s", mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	if (!(image = mlx_new_image(mlx, (800 * 2), (600 * 2))))
+	if (!(image = mlx_new_image(mlx, WIDTH * zoom, HEIGHT * zoom)))
 	{
 		mlx_close_window(mlx);
 		printf("%s", mlx_strerror(mlx_errno));
