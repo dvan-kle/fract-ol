@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 17:47:39 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/03/18 20:12:27 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/03/20 18:50:01 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #define WIDTH 800
 #define HEIGHT 600
-#define MAX_ITERATIONS 500
+#define MAX_ITERATIONS 35
 
 static mlx_image_t* image;
 static float zoom;
@@ -73,13 +73,13 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y += 100;
+		image->instances[0].y += 25;
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		image->instances[0].y -= 100;
+		image->instances[0].y -= 25;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x += 100;
+		image->instances[0].x += 25;
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		image->instances[0].x -= 100;
+		image->instances[0].x -= 25;
 }
 
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -106,6 +106,22 @@ int	ft_coloring(int iterations)
 	return (color);
 }
 
+int	ft_coloring2(int iterations)
+{
+	double	t;
+	int 	r;
+	int 	g;
+	int		b;
+	int 	color;
+
+	t = (double)iterations / (double)MAX_ITERATIONS;
+	r = (int)(9 * (1 - t) * t * t * t * 255);
+	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
+	b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
+	color = r * 0x10000 + g * 0x100 + b;
+	return (color);
+}
+
 void	ft_mandel(void *param)
 {
 	t_complex	c;
@@ -127,7 +143,7 @@ void	ft_mandel(void *param)
 			if (color == MAX_ITERATIONS)
 				mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
 			else
-				mlx_put_pixel(image, x, y, ft_coloring(color));
+				mlx_put_pixel(image, x, y, ft_coloring2(color));
 			x++;
 		}
 		y++;
@@ -146,12 +162,13 @@ int	main(void)
 {
 	mlx_t* mlx;
 	zoom = 1;
+	
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "Fract-ol", true)))
 	{
 		printf("%s", mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	if (!(image = mlx_new_image(mlx, WIDTH * zoom, HEIGHT * zoom)))
+	if (!(image = mlx_new_image(mlx, WIDTH, HEIGHT)))
 	{
 		mlx_close_window(mlx);
 		printf("%s", mlx_strerror(mlx_errno));
@@ -163,9 +180,10 @@ int	main(void)
 		printf("%s", mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
+
+	mlx_set_window_limit(mlx, WIDTH, HEIGHT, WIDTH, HEIGHT);
 	mlx_loop_hook(mlx, ft_mandel, mlx);
 	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_put_string(mlx, "MANDELBROT bitch", WIDTH / 2, HEIGHT / 2);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
