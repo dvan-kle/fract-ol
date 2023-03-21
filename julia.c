@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   julia.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/09 17:47:39 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/03/21 13:25:08 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/03/21 16:58:42 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,18 @@ typedef struct s_complex {
 
 }	t_complex;
 
-int	mandelbrot(t_complex c)
-{
-	t_complex	z;
-	t_complex	tmp;
-	int			iterations;
-
-	z.real = 0;
-	z.imag = 0;
-	iterations = 0;
-	while (iterations < MAX_ITERATIONS
-		&& (z.real * z.real + z.imag * z.imag) < 4)
-	{
-		tmp.real = z.real * z.real - z.imag * z.imag + c.real;
-		tmp.imag = 2 * z.real * z.imag + c.imag;
-		z = tmp;
-		iterations++;
-	}
-	return (iterations);
+int julia_iterations(t_complex c) {
+    double zr = c.real;
+    double zi = c.imag;
+    int i = 0;
+    while (i < MAX_ITERATIONS && zr * zr + zi * zi < 4) {
+        double new_zr = zr * zr - zi * zi + -0.8;
+        double new_zi = 2 * zr * zi + 0.156;
+        zr = new_zr;
+        zi = new_zi;
+        i++;
+    }
+    return i;
 }
 
 int	mandel_iter(int x, int y, t_complex c)
@@ -63,7 +57,7 @@ int	mandel_iter(int x, int y, t_complex c)
 	y_step = (xy_max - y_min) / (HEIGHT * zoom);
 	c.real = x_min + x * x_step;
 	c.imag = xy_max - y * y_step;
-	return (mandelbrot(c));
+	return (julia_iterations(c));
 }
 
 void ft_background(void *param)
