@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/20 22:51:02 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/06 15:22:07 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/07 17:45:49 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@
 
 # define WIDTH 1450
 # define HEIGHT 1000
-# define MAX_ITERATIONS 500
-
-double zoom;
+# define MAX_ITERATIONS 42
 
 typedef struct s_complex {
 	double	real;
@@ -32,8 +30,8 @@ typedef struct s_complex {
 }	t_complex;
 
 typedef struct s_julia {
-	double real;
-	double imag;
+	double	real;
+	double	imag;
 }	t_julia;
 
 typedef struct s_fractol {
@@ -41,28 +39,29 @@ typedef struct s_fractol {
 	mlx_image_t		*image;
 	int				x;
 	int				y;
-	int 			set;
+	int				set;
 	t_julia			*julia;
+	double			zoom;
 }	t_fractol;
 
 typedef struct s_hsv {
-	double h;
-	double s;
-	double v;
+	double	h;
+	double	s;
+	double	v;
 }	t_hsv;
 
 typedef struct s_rgb {
 	int	r;
 	int	g;
-	int b;
-} t_rgb;
+	int	b;
+}	t_rgb;
 
 int		mandelbrot(t_complex c);
 int		julia(t_complex	c, t_julia *julia);
 int		iterations(int x, int y, t_complex c, t_fractol *fractol);
 void	draw_mandel(mlx_image_t *image, t_fractol *fractol);
 int		ft_coloring2(int iterations);
-int 	colors(int iterations);
+int		colors(int iterations);
 int		check_input(int ac, char **av, t_julia *julia);
 
 #endif

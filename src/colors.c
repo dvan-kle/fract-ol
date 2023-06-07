@@ -6,27 +6,25 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:35:06 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/06 13:34:20 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/07 14:59:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fractol.h"
 
-
-
 int	ft_coloring2(int iterations)
 {
 	double	t;
-	int 	r;
-	int 	g;
+	int		r;
+	int		g;
 	int		b;
-	int 	color;
+	int		color;
 
 	t = (double)iterations / (double)MAX_ITERATIONS;
-	r = (int)(19.2 * (1 - t) * t * t * t * 255);
+	r = (int)(19.2 * (1 - t) * t * t * t * 190);
 	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
 	b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-	color = r * 0x10000 + g * 0x100 + b + 25;
+	color = r * 0x10000 + g * 0x100 + b + 19;
 	//printf("COLOR: %i\n", color);
 	return (color);
 }
@@ -37,7 +35,7 @@ t_hsv iterations_to_hsv(int iterations)
 {
 	double	calc;
 	t_hsv	hsv;
-	
+
 	//printf("ITERATIONS: %i\n", iterations);
 	calc = pow((((double)iterations / (double)MAX_ITERATIONS) * (double)1200), 1.5);
 	//printf("calc: %f\n", calc);
@@ -154,7 +152,7 @@ int convert_to_hex(t_rgb rgb)
 	g = rgb.g;
 	b = rgb.b;
 	a = 255;
-	
+
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 

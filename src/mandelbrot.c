@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:38:07 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/06 15:08:55 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/07 17:45:46 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ int	iterations(int x, int y, t_complex c, t_fractol *fractol)
 	double		x_step;
 	double		y_step;
 
-	x_min = -2.0 + zoom;
-	xy_max = 1.0 - zoom;
-	y_min = -1.0 + zoom;
+	x_min = -2.0 + fractol->zoom;
+	xy_max = 1.0 - fractol->zoom;
+	y_min = -1.0 + fractol->zoom;
 	x_step = (xy_max - x_min) / (WIDTH);
 	y_step = (xy_max - y_min) / (HEIGHT);
-	// x_step = (xy_max - x_min) / (WIDTH * (zoom + 1));
-	// y_step = (xy_max - y_min) / (HEIGHT * (zoom + 1));
 	c.real = x_min + x * x_step;
 	c.imag = xy_max - y * y_step;
 	if (fractol->set == 1)
@@ -68,14 +66,13 @@ void	draw_mandel(mlx_image_t *image, t_fractol *fractol)
 	int			x;
 	int			color;
 
-	
 	y = 0;
 	c.real = 0;
 	c.imag = 0;
-	while (y < HEIGHT)
+	while ((y) < HEIGHT)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while ((x) < WIDTH)
 		{
 			color = iterations(x, y, c, fractol);
 			if (color == MAX_ITERATIONS)
