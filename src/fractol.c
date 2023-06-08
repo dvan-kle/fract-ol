@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:06:19 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/07 20:58:25 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/08 14:33:28 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ void	ft_hook2(void *param)
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(fractol->mlx);
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_UP))
+	{
 		fractol->zoom += 0.1;
+	}
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_DOWN))
+	{
 		fractol->zoom -= 0.1;
+	}
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_A))
 		fractol->julia->imag -= 0.03;
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_D))
@@ -105,7 +109,8 @@ int	main(int ac, char **av)
 	atexit(leaks_check);
 	fractol.julia = (t_julia *)malloc(sizeof(t_julia));
 	fractol.set = check_input(ac, av, fractol.julia);
-	fractol.zoom = -0.45;
+	fractol.shift = 0;
+	fractol.zoom = 0.0;
 	if (!fractol.set)
 		exit(EXIT_FAILURE);
 	// fractol_init(fractol.mlx, fractol.fractol->image, &fractol);

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/06 13:21:57 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/06 15:10:35 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/08 13:32:16 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	julia(t_complex c, t_julia *julia)
 	while (iterations < MAX_ITERATIONS
 		&& (z.real * z.real + z.imag * z.imag) < 4)
 	{
-		tmp.real = z.real * z.real - z.imag * z.imag + -(julia->real);
+		tmp.real = z.real * z.real - z.imag * z.imag + julia->real;
 		tmp.imag = 2 * z.real * z.imag + julia->imag;
 		z = tmp;
 		iterations++;
