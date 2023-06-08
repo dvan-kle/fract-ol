@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:38:07 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/08 14:20:06 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/08 19:37:04 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	iterations(int x, int y, t_complex c, t_fractol *fractol)
 	y_min = -1.0 + fractol->zoom;
 	x_step = (xy_max - x_min) / (WIDTH);
 	y_step = (xy_max - y_min) / (HEIGHT);
-	c.real = x_min + (x / (fractol->zoom + 1)) * x_step;
-	c.imag = xy_max - (y / (fractol->zoom + 1)) * y_step;
+	c.real = x_min + x * x_step;
+	c.imag = xy_max - y  * y_step;
 	if (fractol->set == 1)
 		return (mandelbrot(c));
 	if (fractol->set == 2)

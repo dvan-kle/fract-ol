@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:06:19 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/08 14:33:28 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/08 19:36:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ void	ft_hook(mlx_t *mlx)
 		printf("HOOK WORKING\n");
 }
 
+void	ft_scroll(double xdelta, double ydelta, void *param)
+{
+	t_fractol	*fractol;
+
+	fractol = param;
+	
+	if (ydelta > 0)
+	{
+		fractol->zoom += 0.1;
+	}
+	if (ydelta < 0)
+	{
+		fractol->zoom -= 0.1;
+	}
+	xdelta = 0;
+}
+
+
 void	ft_hook2(void *param)
 {
 	t_fractol	*fractol;
@@ -28,21 +46,13 @@ void	ft_hook2(void *param)
 	draw_mandel(fractol->image, fractol);
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(fractol->mlx);
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_UP))
-	{
-		fractol->zoom += 0.1;
-	}
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_DOWN))
-	{
-		fractol->zoom -= 0.1;
-	}
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_LEFT))
 		fractol->julia->imag -= 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_RIGHT))
 		fractol->julia->imag += 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_UP))
 		fractol->julia->real += 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_DOWN))
 		fractol->julia->real -= 0.03;
 }
 
@@ -92,6 +102,7 @@ void	fractol_init2(t_fractol *fractol)
 	mlx_set_window_limit(fractol->mlx, WIDTH, HEIGHT, WIDTH, HEIGHT);
 	// draw_mandel(fractol->image, fractol);
 	//mlx_loop_hook(fractol->mlx, ft_zoom, fractol);
+	mlx_scroll_hook(fractol->mlx, ft_scroll, fractol);
 	mlx_loop_hook(fractol->mlx, ft_hook2, fractol);
 	mlx_loop(fractol->mlx);
 	mlx_terminate(fractol->mlx);
