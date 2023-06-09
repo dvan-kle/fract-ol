@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/20 22:51:02 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/08 14:19:28 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/09 13:32:15 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ typedef struct s_fractol {
 	int				set;
 	t_julia			*julia;
 	double			zoom;
-	int				shift;
+	double			shift_x;
+	double			shift_y;
 }	t_fractol;
 
 typedef struct s_hsv {

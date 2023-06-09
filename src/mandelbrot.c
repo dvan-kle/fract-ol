@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:38:07 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/08 19:37:04 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/09 13:37:32 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	iterations(int x, int y, t_complex c, t_fractol *fractol)
 	double		x_step;
 	double		y_step;
 
-	x_min = -2.0 + fractol->zoom;
-	xy_max = 1.0 - fractol->zoom;
-	y_min = -1.0 + fractol->zoom;
+	x_min = -2.0;
+	xy_max = 1.0;
+	y_min = -1.0;
 	x_step = (xy_max - x_min) / (WIDTH);
 	y_step = (xy_max - y_min) / (HEIGHT);
-	c.real = x_min + x * x_step;
-	c.imag = xy_max - y  * y_step;
+	c.real = (x_min + x * x_step - fractol->shift_x) * fractol->zoom;
+	c.imag = (xy_max - y * y_step - fractol->shift_y) * fractol->zoom;
 	if (fractol->set == 1)
 		return (mandelbrot(c));
 	if (fractol->set == 2)
@@ -69,10 +69,10 @@ void	draw_mandel(mlx_image_t *image, t_fractol *fractol)
 	y = 0;
 	c.real = 0;
 	c.imag = 0;
-	while ((y) < (HEIGHT + fractol->shift))
+	while (y < (HEIGHT + fractol->shift_y))
 	{
 		x = 0;
-		while ((x) < (WIDTH + fractol->shift))
+		while (x < (WIDTH + fractol->shift_x))
 		{
 			color = iterations(x, y, c, fractol);
 			if (color == MAX_ITERATIONS)

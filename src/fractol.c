@@ -6,39 +6,27 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:06:19 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/08 19:36:31 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/09 13:47:01 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fractol.h"
-
-void	ft_hook(mlx_t *mlx)
-{
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		printf("HOOK WORKING\n");
-}
 
 void	ft_scroll(double xdelta, double ydelta, void *param)
 {
 	t_fractol	*fractol;
 
 	fractol = param;
-	
+
 	if (ydelta > 0)
-	{
-		fractol->zoom += 0.1;
-	}
+		fractol->zoom *= 1.1;
 	if (ydelta < 0)
-	{
-		fractol->zoom -= 0.1;
-	}
+		fractol->zoom *= 0.9;
 	xdelta = 0;
 }
 
 
-void	ft_hook2(void *param)
+void	ft_hook(void *param)
 {
 	t_fractol	*fractol;
 
@@ -54,43 +42,17 @@ void	ft_hook2(void *param)
 		fractol->julia->real += 0.03;
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_DOWN))
 		fractol->julia->real -= 0.03;
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_8))
+		fractol->shift_y -= 0.1;
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_2))
+		fractol->shift_y += 0.1;
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_4))
+		fractol->shift_x += 0.1;
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_6))
+		fractol->shift_x -= 0.1;
 }
 
-void	ft_zoom(void *param)
-{
-	t_fractol	*fractol;
-
-	fractol = param;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_ESCAPE))
-	{
-		fractol->zoom += 0.1;
-		draw_mandel(fractol->image, fractol);
-	}
-	// if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-	// {
-	// 	fractol2->zoom = fractol2->zoom - 0.1;
-	// 	draw_mandel(fractol->image, fractol2);
-	// }
-}
-
-// void	fractol_init(mlx_t *mlx, mlx_image_t *image, t_fractol *fractol)
-// {
-// 	mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", false);
-// 	if (!mlx)
-// 		return (exit(-1));
-// 	image = mlx_new_image(mlx, WIDTH, HEIGHT);
-// 	if (!image)
-// 		return (exit(-1));
-// 	mlx_image_to_window(mlx, image, 0, 0);
-// 	mlx_set_window_limit(mlx, WIDTH, HEIGHT, WIDTH, HEIGHT);
-// 	draw_mandel(image, fractol);
-// 	mlx_loop_hook(mlx, ft_zoom, fractol);
-// 	mlx_loop_hook(mlx, ft_hook, mlx);
-// 	mlx_loop(mlx);
-// 	mlx_terminate(mlx);
-// }
-
-void	fractol_init2(t_fractol *fractol)
+void	run_fractol(t_fractol *fractol)
 {
 	fractol->mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", false);
 	if (!fractol->mlx)
@@ -100,10 +62,8 @@ void	fractol_init2(t_fractol *fractol)
 		return (exit(-1));
 	mlx_image_to_window(fractol->mlx, fractol->image, 0, 0);
 	mlx_set_window_limit(fractol->mlx, WIDTH, HEIGHT, WIDTH, HEIGHT);
-	// draw_mandel(fractol->image, fractol);
-	//mlx_loop_hook(fractol->mlx, ft_zoom, fractol);
 	mlx_scroll_hook(fractol->mlx, ft_scroll, fractol);
-	mlx_loop_hook(fractol->mlx, ft_hook2, fractol);
+	mlx_loop_hook(fractol->mlx, ft_hook, fractol);
 	mlx_loop(fractol->mlx);
 	mlx_terminate(fractol->mlx);
 }
@@ -120,11 +80,11 @@ int	main(int ac, char **av)
 	atexit(leaks_check);
 	fractol.julia = (t_julia *)malloc(sizeof(t_julia));
 	fractol.set = check_input(ac, av, fractol.julia);
-	fractol.shift = 0;
-	fractol.zoom = 0.0;
+	fractol.zoom = 1.0;
+	fractol.shift_x = 0;
+	fractol.shift_y = 0;
 	if (!fractol.set)
 		exit(EXIT_FAILURE);
-	// fractol_init(fractol.mlx, fractol.fractol->image, &fractol);
-	fractol_init2(&fractol);
+	run_fractol(&fractol);
 	free(fractol.julia);
 }
