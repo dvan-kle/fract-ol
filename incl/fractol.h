@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/20 22:51:02 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/09 13:32:15 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/11 17:13:03 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
+# include "../ft_printf/ft_printf.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
@@ -62,6 +63,7 @@ int		mandelbrot(t_complex c);
 int		julia(t_complex	c, t_julia *julia);
 int		iterations(int x, int y, t_complex c, t_fractol *fractol);
 void	draw_mandel(mlx_image_t *image, t_fractol *fractol);
+void	error_print(int code);
 int		ft_coloring2(int iterations);
 int		colors(int iterations);
 int		check_input(int ac, char **av, t_julia *julia);

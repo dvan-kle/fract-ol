@@ -6,11 +6,24 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/06 13:36:08 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 16:24:15 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/11 17:16:56 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fractol.h"
+
+void	error_print(int code)
+{
+	if (code == 0)
+	{
+		ft_printf("\nInvalid input\n\nRun as following:\n");
+		ft_printf("- ./fractol mandelbrot\n");
+		ft_printf("- ./fractol julia @param @param\n");
+		ft_printf("   @param should be a float between -1 and 1\n\n");
+	}
+	if (code == 1)
+		ft_printf("Malloc failed\n");
+}
 
 static int	check_digits(char *str)
 {

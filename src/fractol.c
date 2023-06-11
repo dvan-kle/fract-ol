@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:06:19 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 16:24:33 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/11 17:10:58 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,16 @@ int	main(int ac, char **av)
 
 	// atexit(leaks_check);
 	fractol.julia = (t_julia *)malloc(sizeof(t_julia));
+	if (!fractol.julia)
+		return (error_print(1), EXIT_FAILURE);
 	fractol.set = check_input(ac, av, fractol.julia);
+	if (!fractol.set)
+		return (error_print(0), EXIT_FAILURE);
 	fractol.zoom = 1.0;
 	fractol.shift_x = 0;
 	if (fractol.set == 2)
 		fractol.shift_x = -0.45;
 	fractol.shift_y = 0;
-	if (!fractol.set)
-		exit(EXIT_FAILURE);
 	run_fractol(&fractol);
 	free(fractol.julia);
 }
