@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:06:19 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/09 13:47:01 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/11 16:24:33 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@ void	ft_hook(void *param)
 	draw_mandel(fractol->image, fractol);
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(fractol->mlx);
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_A))
 		fractol->julia->imag -= 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_D))
 		fractol->julia->imag += 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_W))
 		fractol->julia->real += 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_S))
 		fractol->julia->real -= 0.03;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_8))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_UP))
 		fractol->shift_y -= 0.1;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_2))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_DOWN))
 		fractol->shift_y += 0.1;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_4))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_RIGHT))
 		fractol->shift_x += 0.1;
-	if (mlx_is_key_down(fractol->mlx, MLX_KEY_KP_6))
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_LEFT))
 		fractol->shift_x -= 0.1;
 }
 
@@ -77,11 +77,13 @@ int	main(int ac, char **av)
 {
 	t_fractol	fractol;
 
-	atexit(leaks_check);
+	// atexit(leaks_check);
 	fractol.julia = (t_julia *)malloc(sizeof(t_julia));
 	fractol.set = check_input(ac, av, fractol.julia);
 	fractol.zoom = 1.0;
 	fractol.shift_x = 0;
+	if (fractol.set == 2)
+		fractol.shift_x = -0.45;
 	fractol.shift_y = 0;
 	if (!fractol.set)
 		exit(EXIT_FAILURE);

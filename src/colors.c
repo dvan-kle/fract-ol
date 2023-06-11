@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:35:06 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/08 11:31:54 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/11 16:30:15 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_coloring2(int iterations)
 	r = (int)(19.2 * (1 - t) * t * t * t * 190);
 	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
 	b = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-	color = r * 0x10000 + g * 0x100 + b + 19;
+	color = r * 0x10000 + 0 * 0x100 + b + 19;
 	//printf("COLOR: %i\n", color);
 	return (color);
 }
@@ -179,7 +179,7 @@ int colors(int iterations)
 	int color;
 
 	//color = convert_to_hex(hsv_to_rgb(iterations_to_hsv2(iterations)));
-	color = hue_saturation(iterations);
+	//color = hue_saturation(iterations);
 	//printf("LOADING.... %i%%\n", iterations);
 	return (color);
 }
