@@ -6,11 +6,12 @@
 #    By: dvan-kle <dvan-kle@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/20 22:07:37 by dvan-kle      #+#    #+#                  #
-#    Updated: 2023/06/11 17:08:18 by danielvankl   ########   odam.nl          #
+#    Updated: 2023/06/11 17:47:43 by danielvankl   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
+
 
 LIBFT = libft/libft.a
 FT_PRINTF = ft_printf/ft_printf.a
@@ -26,13 +27,15 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 all: $(NAME)
 
+.SILENT:
+
 $(NAME): $(OBJ) $(LIBFT) $(FT_PRINTF)
 	@echo "\033[32mCompile fract-ol\033[0m"
 	$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(FT_PRINTF) $(MLX) $(MLX_FLAGS) -o $(NAME)
 	@echo "\033[32mBuild complete\033[0m"
 
 $(OBJ_DIR)%.o: %.c
-	@echo "\033[32mCompile Objects\033[0m"
+	@echo "\033[32mCompiling Objects\033[0m"
 	mkdir -p $(dir $@)
 	$(CC) $(CC_FLAGS) -c $< -o $@
 
