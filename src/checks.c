@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/06 13:36:08 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 17:16:56 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/11 21:40:26 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	error_print(int code)
 	}
 	if (code == 1)
 		ft_printf("Malloc failed\n");
+	if (code == 2)
+		ft_printf("MLX error\n");
+	exit(EXIT_FAILURE);
 }
 
 static int	check_digits(char *str)
@@ -36,7 +39,7 @@ static int	check_digits(char *str)
 		return (0);
 	if (str[0] == '-')
 		i++;
-	while (str[i])
+	while (str[i++])
 	{
 		if (!ft_isdigit(str[i]) && !dot)
 		{
@@ -44,14 +47,12 @@ static int	check_digits(char *str)
 			{
 				dot = true;
 				i++;
-				continue ;
 			}
 			else
 				return (0);
 		}
 		if (!ft_isdigit(str[i]) && dot)
 			return (0);
-		i++;
 	}
 	return (1);
 }

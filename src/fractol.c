@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:06:19 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 17:10:58 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/11 21:36:54 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ void	ft_scroll(double xdelta, double ydelta, void *param)
 	t_fractol	*fractol;
 
 	fractol = param;
-
 	if (ydelta > 0)
 		fractol->zoom *= 1.1;
 	if (ydelta < 0)
 		fractol->zoom *= 0.9;
 	xdelta = 0;
 }
-
 
 void	ft_hook(void *param)
 {
@@ -50,18 +48,29 @@ void	ft_hook(void *param)
 		fractol->shift_x += 0.1;
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_LEFT))
 		fractol->shift_x -= 0.1;
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_J))
+	{
+		fractol->set = 2;
+		fractol->shift_x = -0.45;
+	}
+	if (mlx_is_key_down(fractol->mlx, MLX_KEY_M))
+	{
+		fractol->set = 1;
+		fractol->shift_x = 0;
+	}
 }
 
 void	run_fractol(t_fractol *fractol)
 {
 	fractol->mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", false);
 	if (!fractol->mlx)
-		return (exit(-1));
+		return (free(fractol->julia), error_print(2));
 	fractol->image = mlx_new_image(fractol->mlx, WIDTH, HEIGHT);
 	if (!fractol->image)
-		return (exit(-1));
+		return (free(fractol->julia), error_print(2));
 	mlx_image_to_window(fractol->mlx, fractol->image, 0, 0);
 	mlx_set_window_limit(fractol->mlx, WIDTH, HEIGHT, WIDTH, HEIGHT);
+	write_menu(fractol->mlx);
 	mlx_scroll_hook(fractol->mlx, ft_scroll, fractol);
 	mlx_loop_hook(fractol->mlx, ft_hook, fractol);
 	mlx_loop(fractol->mlx);
@@ -84,7 +93,7 @@ int	main(int ac, char **av)
 	fractol.set = check_input(ac, av, fractol.julia);
 	if (!fractol.set)
 		return (error_print(0), EXIT_FAILURE);
-	fractol.zoom = 1.0;
+	fractol.zoom = 1.3;
 	fractol.shift_x = 0;
 	if (fractol.set == 2)
 		fractol.shift_x = -0.45;

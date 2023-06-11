@@ -6,7 +6,7 @@
 #    By: dvan-kle <dvan-kle@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/20 22:07:37 by dvan-kle      #+#    #+#                  #
-#    Updated: 2023/06/11 17:47:43 by danielvankl   ########   odam.nl          #
+#    Updated: 2023/06/11 21:16:50 by danielvankl   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = fractol
 
 LIBFT = libft/libft.a
 FT_PRINTF = ft_printf/ft_printf.a
+MLX_DIR = MLX42/
 MLX = MLX42/build/libmlx42.a
 
 CC = gcc
@@ -25,7 +26,7 @@ SRC = src/fractol.c src/colors.c src/mandelbrot.c src/checks.c src/julia.c
 OBJ_DIR = obj/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
-all: $(NAME)
+all: libmlx $(NAME)
 
 .SILENT:
 
@@ -47,9 +48,13 @@ $(FT_PRINTF):
 	@echo "\033[32mBuilding Printf\033[0m"
 	$(MAKE) all -C ft_printf
 
+libmlx:
+	cmake $(MLX_DIR) -B $(MLX_DIR)/build && make -C $(MLX_DIR)/build -j4
+
 clean:
 	@echo "\033[32mRun clean\033[0m"
 	rm -rf $(OBJ_DIR)
+	rm -rf MLX42/build
 	$(MAKE) clean -C libft
 	$(MAKE) clean -C ft_printf
 	

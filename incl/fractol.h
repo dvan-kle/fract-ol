@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/20 22:51:02 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 17:13:03 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/11 21:21:13 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	error_print(int code);
 int		ft_coloring2(int iterations);
 int		colors(int iterations);
 int		check_input(int ac, char **av, t_julia *julia);
+void	write_menu(mlx_t *mlx);
 
 #endif
