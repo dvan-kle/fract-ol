@@ -6,7 +6,7 @@
 #    By: dvan-kle <dvan-kle@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/04/20 22:07:37 by dvan-kle      #+#    #+#                  #
-#    Updated: 2023/06/11 21:16:50 by danielvankl   ########   odam.nl          #
+#    Updated: 2023/06/13 00:03:25 by danielvankl   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MLX = MLX42/build/libmlx42.a
 CC = gcc
 CC_FLAGS = -Wall -Wextra
 MLX_FLAGS = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
-SRC = src/fractol.c src/colors.c src/mandelbrot.c src/checks.c src/julia.c
+SRC = src/fractol.c src/utils.c src/mandelbrot.c src/checks.c src/julia.c
 
 OBJ_DIR = obj/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
