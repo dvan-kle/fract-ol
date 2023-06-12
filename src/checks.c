@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/06 13:36:08 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 21:40:26 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/13 00:18:07 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,18 @@ static int	check_digits(char *str)
 		return (0);
 	if (str[0] == '-')
 		i++;
-	while (str[i++])
+	while (str[i])
 	{
 		if (!ft_isdigit(str[i]) && !dot)
 		{
-			if (str[i] == '.')
-			{
+			if (str[i++] == '.')
 				dot = true;
-				i++;
-			}
 			else
 				return (0);
 		}
 		if (!ft_isdigit(str[i]) && dot)
 			return (0);
+		i++;
 	}
 	return (1);
 }
@@ -103,10 +101,19 @@ double	ft_atof(char *s)
 
 int	check_julia(char *realstr, char *imagstr, t_julia *julia)
 {
+	ft_printf("Checking...\n");
 	if (!check_digits(realstr) && !check_digits(imagstr))
 		return (EXIT_FAILURE);
+	
 	julia->real = ft_atof(realstr);
 	julia->imag = ft_atof(imagstr);
+	printf("THE VALUES\n REAL:%f\n IMAG:%f\n", julia->real, julia->imag);
+	if (julia->real < -0.1)
+	{
+		ft_printf("fsult..\n");
+	}
+	if (julia->imag < -0.1)
+		ft_printf("fsult..\n");
 	return (0);
 }
 
