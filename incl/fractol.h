@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/20 22:51:02 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/11 21:21:13 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/14 15:54:22 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,18 @@ typedef struct s_fractol {
 	double			shift_y;
 }	t_fractol;
 
-typedef struct s_hsv {
-	double	h;
-	double	s;
-	double	v;
-}	t_hsv;
-
-typedef struct s_rgb {
-	int	r;
-	int	g;
-	int	b;
-}	t_rgb;
-
+void	run_fractol(t_fractol *fractol);
+void	write_menu(mlx_t *mlx);
+void	ft_scroll(double xdelta, double ydelta, void *param);
+void	ft_hook(void *param);
+void	ft_switch_hook(void *param);
 int		mandelbrot(t_complex c);
 int		julia(t_complex	c, t_julia *julia);
 int		iterations(int x, int y, t_complex c, t_fractol *fractol);
 void	draw_mandel(mlx_image_t *image, t_fractol *fractol);
 void	error_print(int code);
-int		ft_coloring2(int iterations);
-int		colors(int iterations);
+int		ft_coloring(int iterations);
 int		check_input(int ac, char **av, t_julia *julia);
-void	write_menu(mlx_t *mlx);
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 
 #endif

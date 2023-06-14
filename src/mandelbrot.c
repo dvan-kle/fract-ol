@@ -6,16 +6,11 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:38:07 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/09 13:37:32 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/14 15:39:29 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fractol.h"
-
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
 
 int	mandelbrot(t_complex c)
 {
@@ -64,7 +59,7 @@ void	draw_mandel(mlx_image_t *image, t_fractol *fractol)
 	t_complex	c;
 	int			y;
 	int			x;
-	int			color;
+	int			iters;
 
 	y = 0;
 	c.real = 0;
@@ -74,11 +69,11 @@ void	draw_mandel(mlx_image_t *image, t_fractol *fractol)
 		x = 0;
 		while (x < (WIDTH + fractol->shift_x))
 		{
-			color = iterations(x, y, c, fractol);
-			if (color == MAX_ITERATIONS)
+			iters = iterations(x, y, c, fractol);
+			if (iters == MAX_ITERATIONS)
 				mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
 			else
-				mlx_put_pixel(image, x, y, ft_coloring2(color));
+				mlx_put_pixel(image, x, y, ft_coloring(iters));
 			x++;
 		}
 		y++;

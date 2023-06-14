@@ -6,13 +6,18 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 16:35:06 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/13 00:04:30 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/06/14 15:38:05 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fractol.h"
 
-int	ft_coloring2(int iterations)
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+int	ft_coloring(int iterations)
 {
 	double	t;
 	int		r;
@@ -30,10 +35,10 @@ int	ft_coloring2(int iterations)
 
 void	write_menu(mlx_t *mlx)
 {
-	mlx_put_string(mlx, "ESC - EXIT", 1200, 60);
-	mlx_put_string(mlx, "WASD - CHANGE JULIA", 1200, 80);
-	mlx_put_string(mlx, "ARROWS - MOVE AROUND", 1200, 100);
-	mlx_put_string(mlx, "SCROLL - ZOOM", 1200, 120);
-	mlx_put_string(mlx, "M - RESET MANDELBROT", 1200, 140);
-	mlx_put_string(mlx, "J - RESET JULIA", 1200, 160);
+	mlx_put_string(mlx, "ESC - EXIT", 1125, 60);
+	mlx_put_string(mlx, "WASD - CHANGE JULIA PARAMS", 1125, 80);
+	mlx_put_string(mlx, "ARROWS - MOVE CAMERA", 1125, 100);
+	mlx_put_string(mlx, "SCROLL - ZOOM", 1125, 120);
+	mlx_put_string(mlx, "M - SWITCH TO MANDELBROT", 1125, 140);
+	mlx_put_string(mlx, "J - SWITCH TO JULIA", 1125, 160);
 }
