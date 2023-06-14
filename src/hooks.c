@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 13:48:35 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/06/14 13:51:10 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/06/14 16:03:03 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ void	ft_switch_hook(void *param)
 	{
 		fractol->set = 2;
 		fractol->shift_x = -0.45;
+		fractol->shift_y = 0;
 		fractol->zoom = 1.35;
 	}
 	if (mlx_is_key_down(fractol->mlx, MLX_KEY_M))
 	{
 		fractol->set = 1;
 		fractol->shift_x = 0;
+		fractol->shift_y = 0;
 		fractol->zoom = 1.35;
 		fractol->julia->real = 0.0;
 		fractol->julia->imag = 0.0;
